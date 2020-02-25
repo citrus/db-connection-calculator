@@ -3,39 +3,14 @@
     <h1 class="title is-4 has-text-centered">Connection Calculator</h1>
     <div class="box">
       <h5 class="title is-5">Web</h5>
-      <div class="field">
-        <label class="label">Dyno Count</label>
-        <div class="control">
-          <input v-model="web.dynos" type="number" class="input" @input="save">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Web Concurrency</label>
-        <div class="control">
-          <input v-model="web.concurrency" type="number" class="input" @input="save">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Max Threads</label>
-        <div class="control">
-          <input v-model="web.threads" type="number" class="input" @input="save">
-        </div>
-      </div>
+      <calculator-input title="Dynos" v-model="web.dynos" />
+      <calculator-input title="Concurrency" v-model="web.concurrency" />
+      <calculator-input title="Max Threads" v-model="web.threads" />
     </div>
     <div class="box">
       <h5 class="title is-5">Sidekiq</h5>
-      <div class="field">
-        <label class="label">Dyno Count</label>
-        <div class="control">
-          <input v-model="sidekiq.dynos" type="number" class="input" @input="save">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Concurrency</label>
-        <div class="control">
-          <input v-model="sidekiq.concurrency" type="number" class="input" @input="save">
-        </div>
-      </div>
+      <calculator-input title="Dynos" v-model="sidekiq.dynos" />
+      <calculator-input title="Concurrency" v-model="sidekiq.concurrency" />
     </div>
     <div class="box">
       <nav class="level">
@@ -64,8 +39,11 @@
 </template>
 
 <script>
+import CalculatorInput from './calculator-input'
 export default {
-  name: 'HelloWorld',
+  components: {
+    CalculatorInput
+  },
   data () {
     return {
       web: {

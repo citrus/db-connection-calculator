@@ -15,10 +15,12 @@ export default {
 </script>
 
 <style lang="sass" src="bulma"></style>
-
+<style lang="sass">
+  @import '~bulma-slider'
+</style>
 <style>
 .container {
   padding: 40px;
-  max-width: 400px;
+  width: 400px;
 }
 </style>
