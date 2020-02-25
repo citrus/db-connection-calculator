@@ -70,12 +70,12 @@ export default {
     return {
       web: {
         dynos: 1,
-        concurrency: 1,
-        threads: 1
+        concurrency: 2,
+        threads: 16
       },
       sidekiq: {
         dynos: 1,
-        concurrency: 1
+        concurrency: 20
       }
     }
   },
