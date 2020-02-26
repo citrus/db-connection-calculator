@@ -1,15 +1,26 @@
 <template>
   <div id="app" class="container">
+    <h1 class="title is-4 has-text-centered">Connection Calculator</h1>
+    <remote-select />
     <calculator />
+    <br/>
+    <totals />
+    <heroku-helper />
   </div>
 </template>
 
 <script>
+import RemoteSelect from './components/helpers/remote-select'
 import Calculator from './components/calculator.vue'
+import Totals from './components/helpers/totals'
+import HerokuHelper from './components/helpers/heroku-helper'
 export default {
   name: 'App',
   components: {
-    Calculator
+    RemoteSelect,
+    Calculator,
+    Totals,
+    HerokuHelper
   }
 }
 </script>
@@ -22,5 +33,8 @@ export default {
 .container {
   padding: 40px 40px 110px 40px;
   width: 420px;
+}
+.code {
+  font-family: Courier, monospace;
 }
 </style>

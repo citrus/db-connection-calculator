@@ -3,34 +3,38 @@
     <label class="label">{{ title }}</label>
     <div class="control columns">
       <div class="column">
-        <input v-model="localValue" type="range" class="slider is-small is-fullwidth" min="0" :max="max" step="1" @input="update">
+        <input v-model="value" type="range" class="slider is-small is-fullwidth" min="0" :max="max" step="1">
       </div>
       <div class="column is-4">
-        <input v-model="localValue" type="number" class="input has-text-centered" @input="update">
+        <input v-model="value" type="number" class="input has-text-centered">
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     title: String,
-    value: [ Number, String ],
+    item: String,
     max: {
       type: Number,
       default: 32
     }
   },
-  data () {
-    return {
-      localValue: this.value
-    }
-  },
-  methods: {
-    update () {
-      this.$emit('input', this.localValue)
-      this.$parent.save()
+  computed: {
+    ...mapGetters([ 'config' ]),
+    value: {
+      get () {
+        return this.config[this.item]
+      },
+      set (value) {
+        this.$store.commit('config.item.set', {
+          item: this.item,
+          value: value
+        })
+      }
     }
   }
 }
