@@ -33,8 +33,10 @@
           </div>
         </div>
       </nav>
-      <p class="forumula is-6 has-text-centered">({{ web.dynos }} * {{web.concurrency}} * {{web.threads}}) + ({{sidekiq.dynos}} * {{sidekiq.concurrency}})</p>
+      <p class="code is-6 has-text-centered">({{ web.dynos }} * {{web.concurrency}} * {{web.threads}}) + ({{sidekiq.dynos}} * {{sidekiq.concurrency}})</p>
     </div>
+    <pre class="code is-6">heroku ps:scale web={{ web.dynos }} sidekiq={{sidekiq.dynos}} -r production
+heroku config:set WEB_CONCURRENCY={{web.concurrency}} RAILS_MAX_THREADS={{web.threads}} SIDEKIQ_CONCURRENCY={{sidekiq.concurrency}} -r production</pre>
   </div>
 </template>
 
@@ -92,7 +94,11 @@ export default {
 </script>
 
 <style>
-.forumula {
+.code {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
   font-family: Courier, monospace;
 }
 </style>

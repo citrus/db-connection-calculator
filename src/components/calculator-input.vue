@@ -26,6 +26,7 @@ export default {
   methods: {
     update () {
       this.$emit('input', this.localValue)
+      this.$parent.save()
     }
   }
 }
