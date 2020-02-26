@@ -3,7 +3,7 @@
     <label class="label">{{ title }}</label>
     <div class="control columns">
       <div class="column">
-        <input v-model="localValue" type="range" class="slider is-small is-fullwidth" min="0" max="32" step="1" @input="update">
+        <input v-model="localValue" type="range" class="slider is-small is-fullwidth" min="0" :max="max" step="1" @input="update">
       </div>
       <div class="column is-4">
         <input v-model="localValue" type="number" class="input has-text-centered" @input="update">
@@ -16,7 +16,11 @@
 export default {
   props: {
     title: String,
-    value: [ Number, String ]
+    value: [ Number, String ],
+    max: {
+      type: Number,
+      default: 32
+    }
   },
   data () {
     return {

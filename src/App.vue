@@ -21,6 +21,6 @@ export default {
 <style>
 .container {
   padding: 40px 40px 110px 40px;
-  width: 400px;
+  width: 420px;
 }
 </style>
