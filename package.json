@@ -11,6 +11,7 @@
   "dependencies": {
     "bulma": "^0.8.0",
     "bulma-slider": "^2.0.0",
+    "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.4",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",

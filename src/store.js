@@ -30,15 +30,15 @@ export default new Vuex.Store({
   state: {
     config: {
       production: restore('production', { ...DEFAULT_CONFIG }),
-      staging: restore('staging', { ...DEFAULT_CONFIG }),
+      staging: restore('staging', { ...DEFAULT_CONFIG })
     },
     remote: restore('remote', 'staging')
   },
   mutations: {
-    'config.set': (state, { key, data }) => {
-      if (data) {
-        Vue.set(state.config, key, data)
-      }
+    'config.set': (state, { remote, config }) => {
+      Vue.set(state.config, remote, config)
+      persist('remote', remote)
+      persist(remote, config)
     },
     'config.item.set': (state, { item, value }) => {
       const config = state.config[state.remote]

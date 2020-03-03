@@ -5,6 +5,7 @@
     <calculator />
     <br/>
     <totals />
+    <link-helper />
     <heroku-helper />
   </div>
 </template>
@@ -13,6 +14,7 @@
 import RemoteSelect from './components/helpers/remote-select'
 import Calculator from './components/calculator.vue'
 import Totals from './components/helpers/totals'
+import LinkHelper from './components/helpers/link-helper'
 import HerokuHelper from './components/helpers/heroku-helper'
 export default {
   name: 'App',
@@ -20,6 +22,7 @@ export default {
     RemoteSelect,
     Calculator,
     Totals,
+    LinkHelper,
     HerokuHelper
   }
 }
