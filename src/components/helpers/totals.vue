@@ -28,9 +28,21 @@
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Client Size</p>
-          <p class="title">{{ redisClientSize }}</p>
+          <p class="title">{{ config.redis_client_size }}</p>
         </div>
       </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Client Connections</p>
+          <p class="title">{{ redisClientConnections }}</p>
+        </div>
+      </div>
+    </nav>
+    <p class="code is-6 has-text-centered">
+      {{ redisClientConnections }} = {{ config.redis_client_size }} * ({{ config.web_dynos }} * {{ config.web_concurrency }})
+    </p>
+    <hr/>
+    <nav class="level is-marginless">
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Server Size</p>
@@ -38,19 +50,28 @@
           <p class="title has-text-danger" v-else>&#xd8;</p>
         </div>
       </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Server Connections</p>
+          <p class="title">{{ redisServerConnections }}</p>
+        </div>
+      </div>
     </nav>
     <p class="code is-6 has-text-centered">
-      {{ redisClientConnections }} = {{ config.web_concurrency }} * {{ config.web_dynos }} *  ({{ config.web_threads }} / 2)
-    </p>
-    <p class="code is-6 has-text-centered">
-      {{ redisServerSize }} = ({{ config.redis_max_connections }} - {{ redisClientSize }} - 2) / {{ config.sidekiq_dynos }}
+      {{ redisServerSize }} = ({{ config.redis_max_connections }} - {{ redisClientConnections }} - {{ SIDEKIQ_RESERVED }}) / {{ config.sidekiq_dynos }}
     </p>
   </div>
 </template>
 
 <script>
+import { SIDEKIQ_RESERVED } from '@/store'
 import { mapState, mapGetters } from 'vuex'
 export default {
+  data () {
+    return {
+      SIDEKIQ_RESERVED
+    }
+  },
   computed: {
     ...mapState([ 'remote' ]),
     ...mapGetters([
@@ -58,8 +79,9 @@ export default {
       'webConnections',
       'sidekiqConnections',
       'connections',
-      'redisClientConnections',
       'redisClientSize',
+      'redisClientConnections',
+      'redisServerConnections',
       'redisServerSize'
     ])
   }

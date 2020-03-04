@@ -22,8 +22,11 @@ const DEFAULT_CONFIG = {
   web_threads: 16,
   sidekiq_dynos: 1,
   sidekiq_concurrency: 20,
-  redis_max_connections: 200
+  redis_max_connections: 200,
+  redis_client_size: 2
 }
+
+export const SIDEKIQ_RESERVED = 5
 
 export default new Vuex.Store({
   strict: true,
@@ -64,16 +67,18 @@ export default new Vuex.Store({
       return getters.webConnections + getters.sidekiqConnections
     },
     redisClientConnections: (state, getters) => {
-      const { web_dynos, web_concurrency, web_threads } = getters.config
-      return web_dynos * web_concurrency * (web_threads / 2)
+      const { web_dynos, web_concurrency, redis_client_size } = getters.config
+      return web_dynos * web_concurrency * redis_client_size
     },
-    redisClientSize: (state, getters) => {
-      const size = Math.floor(getters.webConnections / getters.redisClientConnections)
-      return isNaN(size) ? 0 : size
+    redisServerConnections: (state, getters) => {
+      const size = getters.redisServerSize
+      if (typeof(size) === 'number') {
+        return size * getters.config.sidekiq_dynos
+      }
     },
     redisServerSize: (state, getters) => {
-      const size = Math.floor((getters.config.redis_max_connections - (getters.redisClientConnections - 2)) / getters.config.sidekiq_dynos)
+      const size = Math.floor((getters.config.redis_max_connections - getters.redisClientConnections - SIDEKIQ_RESERVED) / getters.config.sidekiq_dynos)
       return isFinite(size) ? size : '∞'
-    }
+    },
   }
 })

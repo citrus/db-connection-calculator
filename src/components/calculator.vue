@@ -14,6 +14,7 @@
     <div class="box">
       <h5 class="title is-5">Redis</h5>
       <calculator-input title="Max Connections" item="redis_max_connections" :max="1000" />
+      <calculator-input title="Client Size" item="redis_client_size" />
     </div>
   </div>
 </template>
