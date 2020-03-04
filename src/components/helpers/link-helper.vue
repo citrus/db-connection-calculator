@@ -1,23 +1,18 @@
 <template>
   <p class="has-text-centered">
-    <a :href="href" @click.prevent="copyToClipboard" class="button">{{ text }}</a>
+    <copy-to-clipboard :content="href">
+      🔗Copy Link
+    </copy-to-clipboard>
   </p>
 </template>
 
 <script>
-import querystring from 'querystring'
-import copy from 'copy-to-clipboard'
 import { mapState, mapGetters } from 'vuex'
-const TEXT = {
-  idle: '🔗Copy Link',
-  copied: '👍Copied',
-  failed: 'Copy failed. 👎'
-}
+import querystring from 'querystring'
+import CopyToClipboard from './copy-to-clipboard'
 export default {
-  data () {
-    return {
-      text: TEXT.idle
-    }
+  components: {
+    CopyToClipboard
   },
   computed: {
     ...mapState([ 'remote' ]),
@@ -28,19 +23,6 @@ export default {
         config: querystring.stringify(this.config)
       })
       return `${window.location.origin}?${qs}`
-    }
-  },
-  methods: {
-    copyToClipboard () {
-      const result = copy(this.href)
-      this.flashMessage(result)
-    },
-    flashMessage (success) {
-      this.text = success ? TEXT.copied : TEXT.failed
-      if (this.timeout) clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        this.text = TEXT.idle
-      }, 1000)
     }
   }
 }
